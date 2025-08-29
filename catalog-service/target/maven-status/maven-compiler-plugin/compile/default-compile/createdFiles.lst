@@ -1,0 +1,5 @@
+com\globalbooks\catalog\CatalogServiceImpl$GetBookResponse.class
+com\globalbooks\catalog\CatalogServiceImpl$GetBookRequest.class
+com\globalbooks\catalog\CatalogServiceImpl.class
+com\globalbooks\catalog\Book.class
+com\globalbooks\catalog\InMemoryCatalog.class
