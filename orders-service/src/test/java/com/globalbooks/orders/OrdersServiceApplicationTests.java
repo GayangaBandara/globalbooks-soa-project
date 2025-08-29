@@ -1,8 +1,8 @@
-package com.globalbooks.orders_service;
+package com.globalbooks.orders;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
+	
 @SpringBootTest
 class OrdersServiceApplicationTests {
 

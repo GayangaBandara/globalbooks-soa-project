@@ -19,7 +19,7 @@ public class OrderController {
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         // Calculate total (in real app, call CatalogService)
         double total = order.getItems().stream()
-                .mapToInt(item -> item.getQuantity() * 29.99) // Mock price
+                .mapToDouble(item -> item.getQuantity() * 29.99) // Mock price
                 .sum();
         order.setTotalAmount(total);
         
