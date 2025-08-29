@@ -1,3 +1,6 @@
 E:\PROJECT\java_project\globalbooks-soa-project\catalog-service\src\main\java\com\globalbooks\catalog\Book.java
+E:\PROJECT\java_project\globalbooks-soa-project\catalog-service\src\main\java\com\globalbooks\catalog\CatalogPortType.java
 E:\PROJECT\java_project\globalbooks-soa-project\catalog-service\src\main\java\com\globalbooks\catalog\CatalogServiceImpl.java
+E:\PROJECT\java_project\globalbooks-soa-project\catalog-service\src\main\java\com\globalbooks\catalog\GetBookRequest.java
+E:\PROJECT\java_project\globalbooks-soa-project\catalog-service\src\main\java\com\globalbooks\catalog\GetBookResponse.java
 E:\PROJECT\java_project\globalbooks-soa-project\catalog-service\src\main\java\com\globalbooks\catalog\InMemoryCatalog.java
