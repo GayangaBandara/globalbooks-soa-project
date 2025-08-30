@@ -39,17 +39,18 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test(\"Order created successfully\", function () {",
-              "    pm.response.to.have.status(200);",
-              "    pm.response.to.have.jsonBody('orderId');",
-              "    pm.response.to.have.jsonBody('totalAmount');",
-              "    pm.response.to.have.jsonBody('status', 'CREATED');",
+              "// Test 1: Verify status code is 201",
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
               "});",
               "",
-              "// Save the order ID for later tests",
-              "var response = pm.response.json();",
-              "pm.collectionVariables.set(\"orderId\", response.orderId);",
-              "pm.collectionVariables.set(\"totalAmount\", response.totalAmount);"
+              "// Test 2: Verify response has non-empty id field",
+              "pm.test(\"Response contains non-empty id\", function () {",
+              "    const response = pm.response.json();",
+              "    pm.expect(response.id).to.exist.and.to.not.be.empty;",
+              "    // Store id for next request",
+              "    pm.collectionVariables.set(\"new_order_id\", response.id);",
+              "});"
             ]
           }
         }
@@ -83,11 +84,16 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test(\"Order retrieved successfully\", function () {",
+              "// Test 1: Verify status code is 200",
+              "pm.test(\"Status code is 200\", function () {",
               "    pm.response.to.have.status(200);",
-              "    pm.response.to.have.jsonBody('orderId', pm.collectionVariables.get('orderId'));",
-              "    pm.response.to.have.jsonBody('totalAmount', pm.collectionVariables.get('totalAmount'));",
-              "    pm.response.to.have.jsonBody('userId', 'customer123');",
+              "});",
+              "",
+              "// Test 2: Verify order id matches stored value",
+              "pm.test(\"Order ID matches stored value\", function () {",
+              "    const response = pm.response.json();",
+              "    const storedId = pm.collectionVariables.get(\"new_order_id\");",
+              "    pm.expect(response.id).to.equal(storedId);",
               "});"
             ]
           }

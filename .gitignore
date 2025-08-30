@@ -1,0 +1,135 @@
+# Java
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+**/application-*.yml
+**/application-*.properties
+!**/src/main/resources/application.yml
+!**/src/main/resources/application.properties
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.test
+.env.production
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE - Visual Studio Code
+.vscode/
+*.code-workspace
+.settings/
+.project
+.classpath
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.idea_modules/
+
+# IDE - Eclipse
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# Testing
+test-artifacts/
+**/coverage/
+.nyc_output/
+*.test.js.snap
+
+# RabbitMQ
+rabbitmq.config
+rabbitmq-env.conf
+
+# SOAP UI
+soapui-settings.xml
+*soapui-project.properties
+global-groovy.log
+
+# Postman
+newman/
+
+# BPEL
+*.deploy
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Build directories
+dist/
+build/
+out/
+
+# Test artifacts
+test-output/
+/test-artifacts/
+/screenshots/
+
+# Security files
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.crt
+
+# Custom project specific
+catalog-service/target/
+orders-service/target/
+payments-service/dist/
+shipping-service/dist/

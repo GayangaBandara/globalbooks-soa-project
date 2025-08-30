@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="PlaceOrderProcessArtifacts"
+    targetNamespace="http://globalbooks.com/bpel/placeorder"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+
+    <!-- Partner Link Types -->
+    <plnk:partnerLinkType name="CatalogServicePLT">
+        <plnk:role name="catalogProvider" portType="cat:CatalogPortType"/>
+    </plnk:partnerLinkType>
+    
+    <plnk:partnerLinkType name="OrdersServicePLT">
+        <plnk:role name="ordersProvider" portType="ord:OrdersPortType"/>
+    </plnk:partnerLinkType>
+    
+    <plnk:partnerLinkType name="ClientPLT">
+        <plnk:role name="orderProcessor" portType="client:OrderProcessor"/>
+    </plnk:partnerLinkType>
+
+    <!-- Message Types -->
+    <wsdl:message name="PlaceOrderRequest">
+        <wsdl:part name="payload" element="client:placeOrderRequest"/>
+    </wsdl:message>
+    
+    <wsdl:message name="PlaceOrderResponse">
+        <wsdl:part name="payload" element="client:placeOrderResponse"/>
+    </wsdl:message>
+
+    <!-- Port Types -->
+    <wsdl:portType name="OrderProcessor">
+        <wsdl:operation name="placeOrder">
+            <wsdl:input message="tns:PlaceOrderRequest"/>
+            <wsdl:output message="tns:PlaceOrderResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!-- Bindings -->
+    <wsdl:binding name="OrderProcessorBinding" type="tns:OrderProcessor">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="placeOrder">
+            <soap:operation soapAction="http://globalbooks.com/bpel/placeorder/placeOrder"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <!-- Service -->
+    <wsdl:service name="PlaceOrderProcessService">
+        <wsdl:port name="OrderProcessorPort" binding="tns:OrderProcessorBinding">
+            <soap:address location="http://localhost:8080/ode/processes/PlaceOrder"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

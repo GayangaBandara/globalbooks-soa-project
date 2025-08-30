@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="catalog-service-tests" name="CatalogService SOAP Tests" 
+    xmlns:con="http://eviware.com/soapui/config">
+    
+    <con:settings/>
+    <con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="CatalogServiceSoapBinding" 
+        type="wsdl" bindingName="{http://catalog.globalbooks.com}CatalogServiceSoapBinding" 
+        definition="http://localhost:8080/catalog-service/catalog?wsdl">
+        <con:settings/>
+        <con:endpoints>
+            <con:endpoint>http://localhost:8080/catalog-service/catalog</con:endpoint>
+        </con:endpoints>
+        <con:operation isOneWay="false" action="" name="getBook" 
+            bindingOperationName="getBook" type="Request-Response" 
+            outputName="getBookResponse" inputName="getBookRequest" 
+            receivesAttachments="false" sendsAttachments="false">
+            <con:settings/>
+            <con:call name="GetBook_Success">
+                <con:settings/>
+                <con:request><![CDATA[
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+                  xmlns:cat="http://catalog.globalbooks.com">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cat:getBook>
+         <bookId>soa-bk-101</bookId>
+      </cat:getBook>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request>
+                <con:assertion type="Valid HTTP Status Codes" name="Valid HTTP Status">
+                    <con:configuration>
+                        <codes>200</codes>
+                    </con:configuration>
+                </con:assertion>
+                <con:assertion type="Simple Contains" name="Contains Book Title">
+                    <con:configuration>
+                        <token>SOA for Dummies</token>
+                        <ignoreCase>false</ignoreCase>
+                        <useRegEx>false</useRegEx>
+                    </con:configuration>
+                </con:assertion>
+                <con:assertion type="XPath Match" name="Verify Price">
+                    <con:configuration>
+                        <path>//return/price</path>
+                        <content>39.99</content>
+                        <allowWildcards>false</allowWildcards>
+                        <ignoreNamespaceDifferences>false</ignoreNamespaceDifferences>
+                        <ignoreComments>false</ignoreComments>
+                    </con:configuration>
+                </con:assertion>
+            </con:call>
+        </con:operation>
+    </con:interface>
+    <con:testSuite name="CatalogService TestSuite">
+        <con:settings/>
+        <con:runType>SEQUENTIAL</con:runType>
+        <con:testCase failOnError="true" failTestCaseOnErrors="true" 
+            keepSession="false" maxResults="0" name="GetBook TestCase" 
+            searchProperties="true" id="getbook-test-case">
+            <con:settings/>
+            <con:testStep type="request" name="GetBook_Success">
+                <con:settings/>
+                <con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <con:interface>CatalogServiceSoapBinding</con:interface>
+                    <con:operation>getBook</con:operation>
+                    <con:request name="GetBook_Success"/>
+                </con:config>
+            </con:testStep>
+        </con:testCase>
+    </con:testSuite>
+</con:soapui-project>

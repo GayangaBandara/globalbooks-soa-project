@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpel:process name="PlaceOrderProcess"
+    targetNamespace="http://globalbooks.com/bpel/placeorder"
+    xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:cat="http://catalog.globalbooks.com/"
+    xmlns:ord="http://orders.globalbooks.com/">
+    
+    <bpel:import location="CatalogService.wsdl" 
+        namespace="http://catalog.globalbooks.com/"
+        importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <bpel:import location="OrdersService.wsdl"
+        namespace="http://orders.globalbooks.com/"
+        importType="http://schemas.xmlsoap.org/wsdl/"/>
+    
+    <bpel:partnerLinks>
+        <bpel:partnerLink name="catalogService"
+            partnerLinkType="cat:CatalogServicePLT"
+            partnerRole="catalogProvider"/>
+        <bpel:partnerLink name="ordersService"
+            partnerLinkType="ord:OrdersServicePLT"
+            partnerRole="ordersProvider"/>
+        <bpel:partnerLink name="client"
+            partnerLinkType="client:ClientPLT"
+            myRole="orderProcessor"/>
+    </bpel:partnerLinks>
+    
+    <bpel:variables>
+        <bpel:variable name="orderRequest" messageType="client:PlaceOrderRequest"/>
+        <bpel:variable name="orderResponse" messageType="client:PlaceOrderResponse"/>
+        <bpel:variable name="bookInfo" messageType="cat:GetBookResponse"/>
+        <bpel:variable name="createOrder" messageType="ord:CreateOrderRequest"/>
+    </bpel:variables>
+    
+    <bpel:sequence>
+        <!-- Receive order request from client -->
+        <bpel:receive partnerLink="client"
+            portType="client:OrderProcessor"
+            operation="placeOrder"
+            variable="orderRequest"
+            createInstance="yes"/>
+            
+        <!-- Get book details from catalog service -->
+        <bpel:forEach counterName="itemIndex" parallel="no">
+            <bpel:startCounterValue>1</bpel:startCounterValue>
+            <bpel:finalCounterValue>count($orderRequest.items)</bpel:finalCounterValue>
+            <bpel:scope>
+                <bpel:sequence>
+                    <bpel:invoke partnerLink="catalogService"
+                        portType="cat:CatalogPortType"
+                        operation="getBook"
+                        inputVariable="orderRequest.items[$itemIndex].isbn"
+                        outputVariable="bookInfo"/>
+                </bpel:sequence>
+            </bpel:scope>
+        </bpel:forEach>
+        
+        <!-- Create order in orders service -->
+        <bpel:assign>
+            <bpel:copy>
+                <bpel:from>$orderRequest</bpel:from>
+                <bpel:to>$createOrder</bpel:to>
+            </bpel:copy>
+        </bpel:assign>
+        
+        <bpel:invoke partnerLink="ordersService"
+            portType="ord:OrdersPortType"
+            operation="createOrder"
+            inputVariable="createOrder"
+            outputVariable="orderResponse"/>
+            
+        <!-- Reply to client -->
+        <bpel:reply partnerLink="client"
+            portType="client:OrderProcessor"
+            operation="placeOrder"
+            variable="orderResponse"/>
+    </bpel:sequence>
+</bpel:process>
