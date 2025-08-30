@@ -5,6 +5,12 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     
+    <!-- WS Security Configuration -->
+    <context-param>
+        <param-name>ws.security.enabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
     <listener>
         <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
     </listener>
@@ -12,10 +18,44 @@
     <servlet>
         <servlet-name>CatalogService</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <init-param>
+            <param-name>security.handler</param-name>
+            <param-value>com.globalbooks.catalog.security.WSSecurityHandler</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
         <servlet-name>CatalogService</servlet-name>
         <url-pattern>/catalog</url-pattern>
     </servlet-mapping>
+
+    <!-- Configure MIME types -->
+    <mime-mapping>
+        <extension>wsdl</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xsd</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+
+    <!-- Configure WSDL stylesheet -->
+    <context-param>
+        <param-name>catalog.style</param-name>
+        <param-value>/catalog-style.xsl</param-value>
+    </context-param>
+
+    <!-- Disable directory listing -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Restrict Directory Access</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+
+    <!-- Redirect root to service -->
+    <welcome-file-list>
+        <welcome-file>catalog</welcome-file>
+    </welcome-file-list>
 </web-app>

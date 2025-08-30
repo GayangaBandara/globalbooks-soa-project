@@ -18,4 +18,34 @@
         <servlet-name>CatalogService</servlet-name>
         <url-pattern>/catalog</url-pattern>
     </servlet-mapping>
+
+    <!-- Configure MIME types -->
+    <mime-mapping>
+        <extension>wsdl</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xsd</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+
+    <!-- Configure WSDL stylesheet -->
+    <context-param>
+        <param-name>catalog.style</param-name>
+        <param-value>/catalog-style.xsl</param-value>
+    </context-param>
+
+    <!-- Disable directory listing -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Restrict Directory Access</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+
+    <!-- Redirect root to service -->
+    <welcome-file-list>
+        <welcome-file>catalog</welcome-file>
+    </welcome-file-list>
 </web-app>
