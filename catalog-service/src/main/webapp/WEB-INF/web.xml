@@ -26,8 +26,13 @@
     
     <servlet-mapping>
         <servlet-name>CatalogService</servlet-name>
-        <url-pattern>/catalog</url-pattern>
+        <url-pattern>/catalog/*</url-pattern>
     </servlet-mapping>
+
+    <!-- Enable welcome file -->
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 
     <!-- Configure MIME types -->
     <mime-mapping>

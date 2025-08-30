@@ -1,6 +1,7 @@
 com\globalbooks\catalog\CatalogServiceImpl$GetBookRequest.class
 com\globalbooks\catalog\GetBookResponse.class
 com\globalbooks\catalog\Book.class
+com\globalbooks\catalog\security\WSSecurityHandler.class
 com\globalbooks\catalog\CatalogPortType.class
 com\globalbooks\catalog\GetBookRequest.class
 com\globalbooks\catalog\CatalogServiceImpl$GetBookResponse.class

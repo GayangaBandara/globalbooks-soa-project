@@ -5,6 +5,12 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     
+    <!-- WS Security Configuration -->
+    <context-param>
+        <param-name>ws.security.enabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
     <listener>
         <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
     </listener>
@@ -12,12 +18,21 @@
     <servlet>
         <servlet-name>CatalogService</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <init-param>
+            <param-name>security.handler</param-name>
+            <param-value>com.globalbooks.catalog.security.WSSecurityHandler</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
         <servlet-name>CatalogService</servlet-name>
-        <url-pattern>/catalog</url-pattern>
+        <url-pattern>/catalog/*</url-pattern>
     </servlet-mapping>
+
+    <!-- Enable welcome file -->
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 
     <!-- Configure MIME types -->
     <mime-mapping>
