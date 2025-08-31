@@ -2,7 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                exclude-result-prefixes="wsdl xsd">
+                xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                exclude-result-prefixes="wsdl xsd soap">
 
   <xsl:output method="html" indent="yes"/>
 

@@ -91,11 +91,11 @@
                         <contextPath>/catalog-service</contextPath>
                     </webApp>
                     <httpConnector>
-                        <port>${jetty.port}</port>
+                        <port>8092</port>
                     </httpConnector>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <stopKey>STOP</stopKey>
-                    <stopPort>8091</stopPort>
+                    <stopPort>8093</stopPort>
                 </configuration>
             </plugin>
         </plugins>
